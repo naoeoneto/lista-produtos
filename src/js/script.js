@@ -96,10 +96,11 @@ somaProdutos(produtos)
 
 filtroPesquisa.addEventListener("input", function filtrarPeloInput(event){
     let item = this.value
-    let itemBusca = produtos.filter((prod) => item === prod.nome)
-        listaProdutos.innerHTML = ""
-        renderizarProduto(itemBusca)
-        somaProdutos(itemBusca)
+    let itemBusca = produtos.filter((prod) => 
+        item === prod.nome || item === prod.nome.toLowerCase() || item === prod.nome.toUpperCase())
+            listaProdutos.innerHTML = ""
+            renderizarProduto(itemBusca)
+            somaProdutos(itemBusca)
 })
 
 categoria.addEventListener("click", function filtrarSecao(event){

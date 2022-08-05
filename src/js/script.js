@@ -117,17 +117,6 @@ barraTitulo.append(imgTitulo, carTitulo)
 sectionCar.appendChild(carMain)
 carMain.append(carLista, carImg, tagCarAdd)
 
-function somaProdutos(arr){
-    let soma = 0
-    for(let i = 0; i < arr.length; i++){
-        valorCarrinho.innerHTML = ""
-        soma += arr[i].preco
-    }
-    valorCarrinho.innerText = `R$ ${soma}`
-    secaoCarrinho.appendChild(valorCarrinho)
-}
-somaProdutos(produtos)
-
 function listarNutrientes(arr){ 
     let listaNutri = document.createElement("ol")
     arr.forEach((elem) => {
@@ -202,3 +191,14 @@ function renderizarProdutoCarrinho(elem){
     liCarrinho.append(imgCarrinho, divCarrinho)
     divCarrinho.append(nomeCarrinho, precoCarrinho, removerCarrinho)
 }
+
+function somaProdutos(arr){
+    let soma = 0
+    for(let i = 0; i < arr.length; i++){
+        valorCarrinho.innerHTML = ""
+        soma += parseInt(arr[i].preco)
+    }
+    valorCarrinho.innerText = `R$ ${soma},00`
+    secaoCarrinho.appendChild(valorCarrinho)
+}
+somaProdutos(carrinhoCompras)

@@ -36,18 +36,17 @@ filtroBotao.classList.add("estiloGeralBotoes--botaoBuscaPorNome")
 secaoCarrinho.classList.add("priceContainer")
 secaoProdutos.classList.add("containerVitrine")
 divProdutos.classList.add("containerListaProdutos")
-
 categoria.id = "botoesContainer"
 nomeLoja.innerText = "Shop Now"
 botaoCategoria01.innerText = "Todos Produtos"
 botaoCategoria02.innerText = "Hortifruti"
 botaoCategoria03.innerText = "Panificadora"
 botaoCategoria04.innerText = "Laticínios"
-textoCarrinho.innerText = "Valor total dos produtos da sessão selecionada"
+// textoCarrinho.innerText = "Valor total dos produtos da sessão selecionada"
 imagemBotao.src = "./src/img/search.png"
-imagemCarrinho.src = "./src/img/alert-circle.png"
+// imagemCarrinho.src = "./src/img/alert-circle.png"
 imagemBotao.alt = "lupa"
-imagemCarrinho.alt = "exclamação de alerta"
+// imagemCarrinho.alt = "exclamação de alerta"
 filtroPesquisa.type = "text"
 filtroPesquisa.placeholder = "Pesquisar por"
 
@@ -79,7 +78,6 @@ for(let i = 0; i < arr.length; i++){
     precoProduto.innerText = `R$ ${arr[i].preco}`
     botaoProduto.innerText = "Adicionar ao carrinho"
     botaoProduto.id = `${arr[i].id}`
-    console.log(cardProduto)
 
     listaProdutos.appendChild(cardProduto)
     cardProduto.append(imagemProduto, nomeProduto, tipoProduto, listarNutrientes(arr[i].componentes), precoProduto, botaoProduto)
@@ -88,7 +86,7 @@ for(let i = 0; i < arr.length; i++){
 renderizarProduto(produtos)
 
 let asideLoja = document.createElement("aside")
-mainLoja.appendChild(asideLoja)
+divProdutos.appendChild(asideLoja)
 
 let barraTitulo = document.createElement("section")
 let imgTitulo = document.createElement("img")
@@ -148,17 +146,20 @@ categoria.addEventListener("click", function filtrarSecao(event){
     // somaProdutos(produtosNaTela)
 });
 
-let carrinhoCompras = [];
-
 listaProdutos.addEventListener("click", function selecionarProduto(event){
     let prodCarrinho = event.target
-    console.log(prodCarrinho)
+    // console.log(prodCarrinho)
     if(prodCarrinho.tagName == "BUTTON"){
-        console.log(prodCarrinho.tagName)
+        // console.log(prodCarrinho.tagName)
         let produtoLoja = produtos.find(elem => elem.id == prodCarrinho.id)
-        // carMain.innerHTML = ""
-        addCarrinho(produtoLoja)
-        somaProdutos(carrinhoCompras)
+        if(carrinhoCompras.length < 1){
+            carMain.innerHTML = ""
+            addCarrinho(produtoLoja)
+            somaProdutos(carrinhoCompras)
+        } else {
+            addCarrinho(produtoLoja)
+            somaProdutos(carrinhoCompras)
+        }
     }
 });
 
@@ -173,6 +174,7 @@ function renderizarProdutoCarrinho(elem){
     let divCarrinho = document.createElement("div")
     let imgCarrinho = document.createElement("img")
     let nomeCarrinho = document.createElement("h4")
+    let secaoCarrinho = document.createElement("p")
     let precoCarrinho = document.createElement("strong")
     let removerCarrinho = document.createElement("button")
 
@@ -180,25 +182,57 @@ function renderizarProdutoCarrinho(elem){
     divCarrinho.classList.add("div-prod-carrinho")
     imgCarrinho.classList.add("img-prod-carrinho")
     nomeCarrinho.classList.add("nome-prod-carrinho")
+    secaoCarrinho.classList.add("secao-prod-carrinho")
     precoCarrinho.classList.add("preco-prod-carrinho")
     removerCarrinho.classList.add("remover-prod-carrinho")
     imgCarrinho.src = `${elem.img}`
     nomeCarrinho.innerText = `${elem.nome}`
+    secaoCarrinho.innerText= `${elem.secao}`
     precoCarrinho.innerText = `R$ ${elem.preco}`
-    removerCarrinho.innerText = "Remover do carrinho"
+    removerCarrinho.innerText = "X"
 
     carMain.appendChild(liCarrinho)
-    liCarrinho.append(imgCarrinho, divCarrinho)
-    divCarrinho.append(nomeCarrinho, precoCarrinho, removerCarrinho)
+    liCarrinho.append(imgCarrinho, divCarrinho, removerCarrinho)
+    divCarrinho.append(nomeCarrinho, secaoCarrinho, precoCarrinho)
 }
+
+let carrinhoCompras = [];
+
+// function infoCarrinho(arr){
+let barraInfo = document.createElement("div");
+let infoQtde = document.createElement("span")
+let infoNumero = document.createElement("span")
+let barraTotal = document.createElement("div")
+let totalTexto = document.createElement("span")
+let totalValor = document.createElement("span")
+
+barraInfo.classList.add("carrinho-quantidade")
+barraTotal.classList.add("carrinho-total")
+infoQtde.innerText = "Quantidade"
+// infoNumero.innerText = "0"
+totalTexto.innerText = "Total"
+// totalValor.innerText = "R$ 0"
+
+asideLoja.append(barraInfo, barraTotal)
+barraInfo.append(infoQtde, infoNumero)
+barraTotal.append(totalTexto, totalValor)
+// }
+// infoCarrinho(carrinhoCompras)
 
 function somaProdutos(arr){
     let soma = 0
     for(let i = 0; i < arr.length; i++){
-        valorCarrinho.innerHTML = ""
+        // totalValor.innerHTML = ""
         soma += parseInt(arr[i].preco)
     }
-    valorCarrinho.innerText = `R$ ${soma},00`
-    secaoCarrinho.appendChild(valorCarrinho)
+    
+    infoNumero.innerText = `${arr.length}`
+    totalValor.innerText = `R$ ${soma},00`
+
+    console.log(carrinhoCompras)
+    console.log(carrinhoCompras.length)
+    console.log(soma)
 }
 somaProdutos(carrinhoCompras)
+
+console.log(somaProdutos(carrinhoCompras));

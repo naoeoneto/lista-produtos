@@ -36,6 +36,7 @@ filtroBotao.classList.add("estiloGeralBotoes--botaoBuscaPorNome")
 secaoCarrinho.classList.add("priceContainer")
 secaoProdutos.classList.add("containerVitrine")
 divProdutos.classList.add("containerListaProdutos")
+
 categoria.id = "botoesContainer"
 nomeLoja.innerText = "Shop Now"
 botaoCategoria01.innerText = "Todos Produtos"
@@ -69,19 +70,52 @@ for(let i = 0; i < arr.length; i++){
     let nomeProduto = document.createElement("h3")
     let tipoProduto = document.createElement("span")
     let precoProduto = document.createElement("p")
+    let botaoProduto = document.createElement("button")
 
     imagemProduto.src = `${arr[i].img}`
     imagemProduto.alt = `Imagem ${arr[i].nome}`
     nomeProduto.innerText = `${arr[i].nome}`
     tipoProduto.innerText = `${arr[i].secao}`
-    precoProduto.innerText = `R$ ${arr[i].preco},00`
+    precoProduto.innerText = `R$ ${arr[i].preco}`
+    botaoProduto.innerText = "Adicionar ao carrinho"
+    botaoProduto.id = `${arr[i].id}`
+    console.log(cardProduto)
 
     listaProdutos.appendChild(cardProduto)
-    cardProduto.append(imagemProduto, nomeProduto, tipoProduto, precoProduto)
+    cardProduto.append(imagemProduto, nomeProduto, tipoProduto, listarNutrientes(arr[i].componentes), precoProduto, botaoProduto)
     }
 }
 renderizarProduto(produtos)
 
+let asideLoja = document.createElement("aside")
+mainLoja.appendChild(asideLoja)
+
+let barraTitulo = document.createElement("section")
+let imgTitulo = document.createElement("img")
+let carTitulo = document.createElement("h5");
+let sectionCar = document.createElement("section");
+let carMain = document.createElement("main");
+let carLista = document.createElement("ul");
+let carImg = document.createElement("img");
+let tagCarAdd = document.createElement("p");
+
+barraTitulo.classList.add("carrinho-titulo")
+imgTitulo.classList.add("carrinho-img")
+carTitulo.classList.add("carrinho-texto");
+sectionCar.classList.add("carrinho");
+carMain.classList.add("carrinho-lista");
+carLista.classList.add("titulo");
+carImg.classList.add("carrinho-sacola")
+tagCarAdd.classList.add("subtitulo");
+carTitulo.innerText = "Seu Carrinho"
+tagCarAdd.innerText = "Que tal fazer umas comprinhas?"
+imgTitulo.src ="./src/img/shopping-cart.png"
+carImg.src = "./src/img/shopping-bag.png"
+
+asideLoja.append(barraTitulo, sectionCar)
+barraTitulo.append(imgTitulo, carTitulo)
+sectionCar.appendChild(carMain)
+carMain.append(carLista, carImg, tagCarAdd)
 
 function somaProdutos(arr){
     let soma = 0
@@ -89,30 +123,82 @@ function somaProdutos(arr){
         valorCarrinho.innerHTML = ""
         soma += arr[i].preco
     }
-    valorCarrinho.innerText = `R$ ${soma},00`
+    valorCarrinho.innerText = `R$ ${soma}`
     secaoCarrinho.appendChild(valorCarrinho)
 }
 somaProdutos(produtos)
 
+function listarNutrientes(arr){ 
+    let listaNutri = document.createElement("ol")
+    arr.forEach((elem) => {
+        let nutriItem = document.createElement("li")
+        nutriItem.innerText = `${elem}`
+        listaNutri.appendChild(nutriItem)
+    })
+    return listaNutri
+}
+
 filtroPesquisa.addEventListener("input", function filtrarPeloInput(event){
     let item = this.value
-    let itemBusca = produtos.filter((prod) => 
-        item === prod.nome || item === prod.nome.toLowerCase() || item === prod.nome.toUpperCase())
+    let itemBusca = produtos.filter((elem) => 
+        elem.nome.toLowerCase().includes(item.toLowerCase()) || elem.nome.toLowerCase().includes(item.toLowerCase()) || elem.nome.toLowerCase().includes(item.toLowerCase()))
             listaProdutos.innerHTML = ""
             renderizarProduto(itemBusca)
-            somaProdutos(itemBusca)
+            // somaProdutos(itemBusca)
 })
 
 categoria.addEventListener("click", function filtrarSecao(event){
     let produtoCategoria = event.target
-    let produtosNaTela = produtos.filter((prod) => {
-        if(produtoCategoria.innerText == "Todos Produtos"){
-            return prod
-        } else if(prod.secao === produtoCategoria.innerText){
-            return prod
+    let produtosNaTela = produtos.filter((elem) => {
+        if(produtoCategoria.innerText == "Todos Produtos" || elem.secao === produtoCategoria.innerText){
+            return elem
         }
     }) 
     listaProdutos.innerHTML = ""
     renderizarProduto(produtosNaTela)
-    somaProdutos(produtosNaTela)
-})
+    // somaProdutos(produtosNaTela)
+});
+
+let carrinhoCompras = [];
+
+listaProdutos.addEventListener("click", function selecionarProduto(event){
+    let prodCarrinho = event.target
+    console.log(prodCarrinho)
+    if(prodCarrinho.tagName == "BUTTON"){
+        console.log(prodCarrinho.tagName)
+        let produtoLoja = produtos.find(elem => elem.id == prodCarrinho.id)
+        // carMain.innerHTML = ""
+        addCarrinho(produtoLoja)
+        somaProdutos(carrinhoCompras)
+    }
+});
+
+function addCarrinho(elem){
+    carrinhoCompras.push(elem)
+    renderizarProdutoCarrinho(elem)
+}
+
+function renderizarProdutoCarrinho(elem){
+    let carMain = document.querySelector(".carrinho-lista")
+    let liCarrinho = document.createElement("li")
+    let divCarrinho = document.createElement("div")
+    let imgCarrinho = document.createElement("img")
+    let nomeCarrinho = document.createElement("h4")
+    let precoCarrinho = document.createElement("strong")
+    let removerCarrinho = document.createElement("button")
+
+    liCarrinho.classList.add("item-prod-carrinho")
+    divCarrinho.classList.add("div-prod-carrinho")
+    imgCarrinho.classList.add("img-prod-carrinho")
+    nomeCarrinho.classList.add("nome-prod-carrinho")
+    precoCarrinho.classList.add("preco-prod-carrinho")
+    removerCarrinho.classList.add("remover-prod-carrinho")
+    imgCarrinho.src = `${elem.img}`
+    nomeCarrinho.innerText = `${elem.nome}`
+    precoCarrinho.innerText = `R$ ${elem.preco}`
+    removerCarrinho.innerText = "Remover do carrinho"
+
+    carMain.appendChild(liCarrinho)
+    liCarrinho.append(imgCarrinho, divCarrinho)
+    divCarrinho.append(nomeCarrinho, precoCarrinho, removerCarrinho)
+}

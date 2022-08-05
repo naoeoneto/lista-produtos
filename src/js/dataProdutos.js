@@ -1,86 +1,81 @@
 const produtos = [
     {
-        nome: 'Banana',
-        preco: 2,
-        secao: 'Hortifruti',
-        categoria: 'fruta',
-        img: "./src/img/banana.png"
+      id: 1,
+      nome: 'Banana',
+      preco: '2.00',
+      secao: 'Hortifruti',
+      categoria: 'fruta',
+      img: "./src/img/banana.png",
+      promocao: true,
+      precoPromocao: '1.00',
+      componentes: [
+        'Potássio',
+        'Vitamina B6',
+        'Vitamina C',
+        'Folatos'
+      ]
     },
     {
-        nome: 'Morango',
-        preco: 2,
-        secao: 'Hortifruti',
-        categoria: 'fruta',
-        img: './src/img/morango.png'
+      id: 2,
+      nome: 'Morango',
+      preco: '2.00',
+      secao: 'Hortifruti',
+      categoria: 'fruta',
+      img: './src/img/morango.png',
+      promocao: false,
+      precoPromocao: '0',
+      componentes: [
+        'Fibras',
+        'Vitamina C',
+        'Cálcio',
+        'Ferro'
+      ]
     },
     {
-        nome: 'Maçã',
-        preco: 2,
-        secao: 'Hortifruti',
-        categoria: 'fruta',
-        img: './src/img/maça.png'
+      id: 3,
+      nome: 'Maçã',
+      preco: '2.00',
+      secao: 'Hortifruti',
+      categoria: 'fruta',
+      img: './src/img/maça.png',
+      promocao: true,
+      precoPromocao: '1.50',
+      componentes: [
+        'Potássio',
+        'Vitamina A',
+        'Vitamina E',
+        'Vitamina C'
+      ]
     },
     {
-        nome: 'Pão',
-        preco: 4,
-        secao: 'Panificadora',
-        categoria: 'Pães',
-        img: './src/img/pao.png'
+      id: 4,
+      nome: 'Pão',
+      preco: '4.00',
+      secao: 'Panificadora',
+      categoria: 'Pães',
+      img: './src/img/pao.png',
+      promocao: true,
+      precoPromocao: '2.50',
+      componentes: [
+        'Cálcio',
+        'Sódio',
+        'Fibra Alimentar',
+        'Proteínas'
+      ]
     },
     {
-        nome: 'Leite',
-        preco: 5,
-        secao: 'Laticínios',
-        categoria: 'Leite',
-        img: './src/img/leite.png'
+      id: 5,
+      nome: 'Leite',
+      preco: '5.00',
+      secao: 'Laticínios',
+      categoria: 'Leite',
+      img: './src/img/leite.png',
+      promocao: false,
+      precoPromocao: '1.00',
+      componentes: [
+        'Carboidratos',
+        'Proteínas',
+        'Gorduras totais'
+      ]
     },
-    {
-        nome: 'Iogurte',
-        preco: 7,
-        secao: 'Laticínios',
-        categoria: 'Iogurte',
-        img: './src/img/iogurte.jpg'
-    },
-    {
-        nome: 'Pão Integral',
-        preco: 6,
-        secao: 'Panificadora',
-        categoria: 'Pães',
-        img: './src/img/pao-integral.jpg'
-    },
-    {
-        nome: 'Laranja',
-        preco: 3,
-        secao: 'Hortifruti',
-        categoria: 'Fruta',
-        img: './src/img/laranja.jpg'
-    },
-    {
-        nome: 'Torta de limão',
-        preco: 10,
-        secao: 'Panificadora',
-        categoria: 'Torta',
-        img: './src/img/torta-de-limao.jpg'
-    },
-    {
-        nome: 'Pastel de forno',
-        preco: 5,
-        secao: 'Panificadora',
-        categoria: 'Pastel',
-        img: './src/img/pastel-de-forno.jpg'
-    },
-    {
-        nome: 'Queijo Minas',
-        preco: 8,
-        secao: 'Laticínios',
-        categoria: 'Iogurte',
-        img: './src/img/queijo-minas.png'
-    },
-    {
-        nome: 'Requeijão',
-        preco: 5,
-        secao: 'Laticínios',
-        categoria: 'Requeijão',
-        img: './src/img/requeijao.jpg'
-    }
-]
+  ]

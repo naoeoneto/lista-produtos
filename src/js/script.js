@@ -14,9 +14,6 @@ let filtroBotao = document.createElement("button")
 let imagemBotao = document.createElement("img")
 let secaoCarrinho = document.createElement("section")
 let divCarrinho = document.createElement("div")
-let imagemCarrinho = document.createElement("img")
-let valorCarrinho = document.createElement("span")
-let textoCarrinho = document.createElement("p")
 let secaoProdutos = document.createElement("section")
 let divProdutos = document.createElement("div")
 let listaProdutos = document.createElement("ul")
@@ -29,11 +26,10 @@ botaoCategoria04.className = "estiloGeralBotoes"
 botaoCategoria01.classList.add("estiloGeralBotoes--filter")
 botaoCategoria02.classList.add("estiloGeralBotoes--filter")
 botaoCategoria03.classList.add("estiloGeralBotoes--filter")
-botaoCategoria04.classList.add("estiloGeralBotoes--filter")
+botaoCategoria04.classList.add("estiloGeralBotoes--filter--lat")
 filtro.classList.add("containerBuscaPorNome")
 filtroPesquisa.classList.add("campoBuscaPorNome")
 filtroBotao.classList.add("estiloGeralBotoes--botaoBuscaPorNome")
-secaoCarrinho.classList.add("priceContainer")
 secaoProdutos.classList.add("containerVitrine")
 divProdutos.classList.add("containerListaProdutos")
 categoria.id = "botoesContainer"
@@ -42,11 +38,8 @@ botaoCategoria01.innerText = "Todos Produtos"
 botaoCategoria02.innerText = "Hortifruti"
 botaoCategoria03.innerText = "Panificadora"
 botaoCategoria04.innerText = "Laticínios"
-// textoCarrinho.innerText = "Valor total dos produtos da sessão selecionada"
 imagemBotao.src = "./src/img/search.png"
-// imagemCarrinho.src = "./src/img/alert-circle.png"
 imagemBotao.alt = "lupa"
-// imagemCarrinho.alt = "exclamação de alerta"
 filtroPesquisa.type = "text"
 filtroPesquisa.placeholder = "Pesquisar por"
 
@@ -57,17 +50,18 @@ secaoCategoria.append(categoria, filtro)
 categoria.append(botaoCategoria01, botaoCategoria02, botaoCategoria03, botaoCategoria04)
 filtro.append(filtroPesquisa, filtroBotao)
 filtroBotao.appendChild(imagemBotao)
-secaoCarrinho.appendChild(divCarrinho)
-divCarrinho.append(imagemCarrinho, textoCarrinho)
 secaoProdutos.appendChild(divProdutos)
 divProdutos.appendChild(listaProdutos)
 
 function renderizarProduto(arr){
 for(let i = 0; i < arr.length; i++){
     let cardProduto = document.createElement("li")
+    let divImg = document.createElement("div")
     let imagemProduto = document.createElement("img")
+    let divInfo = document.createElement("div")
     let nomeProduto = document.createElement("h3")
     let tipoProduto = document.createElement("span")
+    let divPreco = document.createElement("div")
     let precoProduto = document.createElement("p")
     let botaoProduto = document.createElement("button")
 
@@ -78,22 +72,28 @@ for(let i = 0; i < arr.length; i++){
     precoProduto.innerText = `R$ ${arr[i].preco}`
     botaoProduto.innerText = "Adicionar ao carrinho"
     botaoProduto.id = `${arr[i].id}`
+    // cardProduto.classList.add("card")
+    divImg.classList.add("card-imagem")
+    divInfo.classList.add("card-info")
+    divPreco.classList.add("card-preco")
 
     listaProdutos.appendChild(cardProduto)
-    cardProduto.append(imagemProduto, nomeProduto, tipoProduto, listarNutrientes(arr[i].componentes), precoProduto, botaoProduto)
+    cardProduto.append(divImg, divInfo, divPreco)
+    divImg.appendChild(imagemProduto)
+    divInfo.append(nomeProduto, tipoProduto, listarNutrientes(arr[i].componentes))
+    divPreco.append(precoProduto, botaoProduto)
     }
 }
 renderizarProduto(produtos)
 
 let asideLoja = document.createElement("aside")
-divProdutos.appendChild(asideLoja)
+secaoProdutos.appendChild(asideLoja)
 
 let barraTitulo = document.createElement("section")
 let imgTitulo = document.createElement("img")
 let carTitulo = document.createElement("h5");
 let sectionCar = document.createElement("section");
 let carMain = document.createElement("main");
-let carLista = document.createElement("ul");
 let carImg = document.createElement("img");
 let tagCarAdd = document.createElement("p");
 
@@ -102,7 +102,6 @@ imgTitulo.classList.add("carrinho-img")
 carTitulo.classList.add("carrinho-texto");
 sectionCar.classList.add("carrinho");
 carMain.classList.add("carrinho-lista");
-carLista.classList.add("titulo");
 carImg.classList.add("carrinho-sacola")
 tagCarAdd.classList.add("subtitulo");
 carTitulo.innerText = "Seu Carrinho"
@@ -113,7 +112,7 @@ carImg.src = "./src/img/shopping-bag.png"
 asideLoja.append(barraTitulo, sectionCar)
 barraTitulo.append(imgTitulo, carTitulo)
 sectionCar.appendChild(carMain)
-carMain.append(carLista, carImg, tagCarAdd)
+carMain.append(carImg, tagCarAdd)
 
 function listarNutrientes(arr){ 
     let listaNutri = document.createElement("ol")
@@ -148,9 +147,7 @@ categoria.addEventListener("click", function filtrarSecao(event){
 
 listaProdutos.addEventListener("click", function selecionarProduto(event){
     let prodCarrinho = event.target
-    // console.log(prodCarrinho)
     if(prodCarrinho.tagName == "BUTTON"){
-        // console.log(prodCarrinho.tagName)
         let produtoLoja = produtos.find(elem => elem.id == prodCarrinho.id)
         if(carrinhoCompras.length < 1){
             carMain.innerHTML = ""
@@ -198,7 +195,6 @@ function renderizarProdutoCarrinho(elem){
 
 let carrinhoCompras = [];
 
-// function infoCarrinho(arr){
 let barraInfo = document.createElement("div");
 let infoQtde = document.createElement("span")
 let infoNumero = document.createElement("span")
@@ -209,30 +205,19 @@ let totalValor = document.createElement("span")
 barraInfo.classList.add("carrinho-quantidade")
 barraTotal.classList.add("carrinho-total")
 infoQtde.innerText = "Quantidade"
-// infoNumero.innerText = "0"
 totalTexto.innerText = "Total"
-// totalValor.innerText = "R$ 0"
 
 asideLoja.append(barraInfo, barraTotal)
 barraInfo.append(infoQtde, infoNumero)
 barraTotal.append(totalTexto, totalValor)
-// }
-// infoCarrinho(carrinhoCompras)
 
 function somaProdutos(arr){
     let soma = 0
     for(let i = 0; i < arr.length; i++){
-        // totalValor.innerHTML = ""
         soma += parseInt(arr[i].preco)
     }
     
     infoNumero.innerText = `${arr.length}`
     totalValor.innerText = `R$ ${soma},00`
-
-    console.log(carrinhoCompras)
-    console.log(carrinhoCompras.length)
-    console.log(soma)
 }
 somaProdutos(carrinhoCompras)
-
-console.log(somaProdutos(carrinhoCompras));
